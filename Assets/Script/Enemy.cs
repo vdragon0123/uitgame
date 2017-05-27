@@ -19,8 +19,11 @@ public class Enemy : MonoBehaviour {
 
     public bool isEnemyFollow;
     public bool isEnemyBoss;
+    public bool isEnemyNormal;
 
     float timeSacle;
+    float timeRotation;
+    public  bool isRotation;
 
     // Use this for initialization
     void Start () {
@@ -65,7 +68,7 @@ public class Enemy : MonoBehaviour {
                     //Vector2 transformVector2 = new Vector2(transform.up.x, transform.up.z);
 
                     LookAt2Din3D(distanceVector2, transform, 2f);
-                    rb.MovePosition(transform.position + transform.up * Time.deltaTime * 6);
+                    rb.MovePosition(transform.position + transform.up * Time.deltaTime * 10);
                 }
                 
             }
@@ -107,6 +110,29 @@ public class Enemy : MonoBehaviour {
                 
             }
         }
+        if (isEnemyNormal)
+        {
+            if (isRunScript)
+            {
+                if (isRotation)
+                {
+                    timeRotation += Time.deltaTime;
+                    float timeMax = Random.Range(0.5f, 1.5f);
+                    if (timeRotation < timeMax)
+                    {
+                        transform.Rotate(Vector3.forward * Time.deltaTime * 80);
+                        rb.MovePosition(transform.position + transform.up * Time.deltaTime * 8 * -1);
+                    }
+                    else
+                    {
+                        timeRotation = 0;
+                        isRotation = false;
+                    }                       
+                }
+                else
+                    rb.MovePosition(transform.position + transform.up * Time.deltaTime * 8);
+            }
+        }
     }
 
     private float AngleBetweenVector2(Vector2 vec1, Vector2 vec2)
@@ -133,7 +159,11 @@ public class Enemy : MonoBehaviour {
             {
                 isRunScript = true;
                 Destroy(posObject);
-            }          
+            }       
+            if (isEnemyNormal)
+            {
+                isRunScript = true;
+            }
         }
         if (collision.gameObject.tag == "Player")
         {
@@ -145,8 +175,46 @@ public class Enemy : MonoBehaviour {
             {
                 Destroy(gameObject);
                 player.GetComponent<Character>().direction *= -1;
+                player.GetComponent<Character>().isRespawnEnemyFollow = true;
+            }
+            if (isEnemyNormal)
+            {
+                Destroy(collision.gameObject);
             }
         }
-            
+        if (collision.gameObject.tag == "Wall")
+        {
+            if (isEnemyNormal)
+                isRotation = true;
+        }
+        if (collision.gameObject.tag == "EnemyFollow")
+        {
+            if (isEnemyNormal)
+                isRotation = true;
+        }
+        if (collision.gameObject.tag == "EnemyBoss")
+        {
+            if (isEnemyNormal)
+                isRotation = true;
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Wall")
+        {
+            if (isEnemyNormal)
+                isRotation = true;
+        }
+        if (collision.gameObject.tag == "EnemyFollow")
+        {
+            if (isEnemyNormal)
+                isRotation = true;
+        }
+        if (collision.gameObject.tag == "EnemyBoss")
+        {
+            if (isEnemyNormal)
+                isRotation = true;
+        }
     }
 }

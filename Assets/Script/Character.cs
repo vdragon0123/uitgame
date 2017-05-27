@@ -23,6 +23,10 @@ public class Character : MonoBehaviour {
     bool onceTime;
 
     public float direction;
+
+    float timeRespawnEnemyFollow;
+    public bool isRespawnEnemyFollow;
+    public GameObject enemyFollow;
     // Use this for initialization
     void Start () {
         rig = GetComponent<Rigidbody>();
@@ -32,7 +36,24 @@ public class Character : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
+        if (isRespawnEnemyFollow)
+        {
+            timeRespawnEnemyFollow += Time.deltaTime;
+            if (timeRespawnEnemyFollow > 5f)
+            {
+                isRespawnEnemyFollow = false;
+                float maxX = GameObject.FindGameObjectWithTag("Ground").GetComponent<BoxCollider>().bounds.max.x;
+                float maxZ = GameObject.FindGameObjectWithTag("Ground").GetComponent<BoxCollider>().bounds.max.z;
+                float minX = GameObject.FindGameObjectWithTag("Ground").GetComponent<BoxCollider>().bounds.min.x;
+                float minZ = GameObject.FindGameObjectWithTag("Ground").GetComponent<BoxCollider>().bounds.min.z;
+                float posX = Random.Range(minX + 20, maxX - 20);
+                float posZ = Random.Range(minZ + 20, maxZ - 20);
+                var go = Instantiate(enemyFollow, new Vector3(posX, 45f, posZ), transform.rotation);
+                timeRespawnEnemyFollow = 0;
+                go.GetComponent<Enemy>().isEnemyFollow = true;
+                go.GetComponent<Enemy>().player = gameObject;
+            }
+        }
         vectorDirection = objectDirection.position - transform.position;
         rig.MovePosition(transform.position + transform.up * Time.deltaTime * speed * direction);
         if (isRotationLeftPointerDown)
