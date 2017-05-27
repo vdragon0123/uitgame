@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="Assets\Script\Around.cs" />
     <Compile Include="Assets\Script\Character.cs" />
+    <Compile Include="Assets\Script\EndGame.cs" />
     <Compile Include="Assets\Script\Enemy.cs" />
     <Compile Include="Assets\Script\MyCamera.cs" />
   </ItemGroup>
