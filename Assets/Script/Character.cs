@@ -13,6 +13,8 @@ public class Character : MonoBehaviour {
     public bool isRotationRightPointerDown;
     public bool isAddForcePointerDown;
 
+    public float speed = 6f;
+
     float timeFillAmount;
     public Image loadingImage;
 
@@ -26,7 +28,7 @@ public class Character : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         vectorDirection = objectDirection.position - transform.position;
-        rig.MovePosition(transform.position + transform.up * Time.deltaTime * 6);
+        rig.MovePosition(transform.position + transform.up * Time.deltaTime * speed);
         if (isRotationLeftPointerDown)
             transform.Rotate(Vector3.forward * Time.deltaTime * 80);
         if (isRotationRightPointerDown)
@@ -34,14 +36,11 @@ public class Character : MonoBehaviour {
 
         timeFillAmount += Time.deltaTime;
         loadingImage.fillAmount = Mathf.Lerp(0, 1, timeFillAmount / 3);
-        if (loadingImage.fillAmount == 1)
-        {
-
-        }
+        
 
         if (isAddForcePointerDown)
         {
-            onceTime = false;
+            /*onceTime = false;
             Time.timeScale = 0.5f;
             timeFillAmount += Time.deltaTime;
             force = Mathf.Lerp(2000, 8000, timeFillAmount / 1);
@@ -54,7 +53,8 @@ public class Character : MonoBehaviour {
                 loadingImage.fillAmount = 0;
                 rig.AddForce(transform.up * force);
                 Time.timeScale = 1f;
-            }
+            }*/
+            
         }
     }
 
@@ -85,17 +85,21 @@ public class Character : MonoBehaviour {
 
     public void AddForcePointerDown()
     {
-        isAddForcePointerDown = true;
+        if (loadingImage.fillAmount == 1)
+        {
+            isAddForcePointerDown = true;
+        }
+        
     }
 
     public void AddForcePointerUp()
     {
-        if (onceTime == false)
+        if (isAddForcePointerDown)
         {
             isAddForcePointerDown = false;
             timeFillAmount = 0;
             loadingImage.fillAmount = 0;
-            rig.AddForce(transform.up * force);
+            rig.AddForce(transform.up * 5500);
             Time.timeScale = 1f;
         }        
     }
