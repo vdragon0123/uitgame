@@ -44,26 +44,30 @@ public class Enemy : MonoBehaviour {
             }
             if (isRunScript)
             {
-                vectorDirection = objectDirection.position - transform.position;
-
-                /*if (transform.up != (player.transform.position - transform.position))
-                    transform.Rotate(Vector3.forward * Time.deltaTime * 80);*/
-
-                //rb.MovePosition(transform.position + transform.up * Time.deltaTime * 3);
-                Vector3 distanceVecter3 = player.transform.position - transform.position;
-                Vector2 distanceVector2 = new Vector2(distanceVecter3.x, distanceVecter3.z);
-                /*if (Vector2.Angle(distanceVector2, new Vector2(transform.up.x, transform.up.z)) < 30f)
+                if (player != null)
                 {
-                    rb.MovePosition(transform.position + transform.up * Time.deltaTime * 3);
+                    vectorDirection = objectDirection.position - transform.position;
+
+                    /*if (transform.up != (player.transform.position - transform.position))
+                        transform.Rotate(Vector3.forward * Time.deltaTime * 80);*/
+
+                    //rb.MovePosition(transform.position + transform.up * Time.deltaTime * 3);
+                    Vector3 distanceVecter3 = player.transform.position - transform.position;
+                    Vector2 distanceVector2 = new Vector2(distanceVecter3.x, distanceVecter3.z);
+                    /*if (Vector2.Angle(distanceVector2, new Vector2(transform.up.x, transform.up.z)) < 30f)
+                    {
+                        rb.MovePosition(transform.position + transform.up * Time.deltaTime * 3);
+                    }
+                    else
+                    {
+                        transform.Rotate(Vector3.forward * Time.deltaTime * 80);
+                    }*/
+                    //Vector2 transformVector2 = new Vector2(transform.up.x, transform.up.z);
+
+                    LookAt2Din3D(distanceVector2, transform, 2f);
+                    rb.MovePosition(transform.position + transform.up * Time.deltaTime * 6);
                 }
-                else
-                {
-                    transform.Rotate(Vector3.forward * Time.deltaTime * 80);
-                }*/
-                //Vector2 transformVector2 = new Vector2(transform.up.x, transform.up.z);
-
-                LookAt2Din3D(distanceVector2, transform, 2f);
-                rb.MovePosition(transform.position + transform.up * Time.deltaTime * 6);
+                
             }
         }
         if (isEnemyBoss)
@@ -78,25 +82,29 @@ public class Enemy : MonoBehaviour {
             }
             else
             {
-                Vector3 distanceVecter3 = player.transform.position - transform.position;
-                Vector2 distanceVector2 = new Vector2(distanceVecter3.x, distanceVecter3.z);
-                LookAt2Din3D(distanceVector2, transform, 5f);
-                Debug.DrawLine(Vector3.zero, new Vector3(1, 0, 0), Color.red);
-                if (Vector2.Distance(new Vector2(player.transform.position.x, player.transform.position.z), new Vector2(transform.position.x, transform.position.z)) < 20f)
+                if (player != null)
                 {
-                    if (Vector2.Angle(distanceVector2, new Vector2(transform.up.x, transform.up.z)) < 10f)
+                    Vector3 distanceVecter3 = player.transform.position - transform.position;
+                    Vector2 distanceVector2 = new Vector2(distanceVecter3.x, distanceVecter3.z);
+                    LookAt2Din3D(distanceVector2, transform, 5f);
+                    Debug.DrawLine(Vector3.zero, new Vector3(1, 0, 0), Color.red);
+                    if (Vector2.Distance(new Vector2(player.transform.position.x, player.transform.position.z), new Vector2(transform.position.x, transform.position.z)) < 20f)
                     {
-                        if (onceTimeAttack)
+                        if (Vector2.Angle(distanceVector2, new Vector2(transform.up.x, transform.up.z)) < 10f)
                         {
-                            rb.AddForce(transform.up * 7000);
-                            onceTimeAttack = false;
+                            if (onceTimeAttack)
+                            {
+                                rb.AddForce(transform.up * 7000);
+                                onceTimeAttack = false;
+                            }
                         }
                     }
+                    else
+                    {
+                        onceTimeAttack = true;
+                    }
                 }
-                else
-                {
-                    onceTimeAttack = true;
-                }
+                
             }
         }
     }
@@ -126,6 +134,18 @@ public class Enemy : MonoBehaviour {
                 isRunScript = true;
                 Destroy(posObject);
             }          
+        }
+        if (collision.gameObject.tag == "Player")
+        {
+            if (isEnemyBoss)
+            {
+                Destroy(collision.gameObject);
+            }
+            if (isEnemyFollow)
+            {
+                Destroy(gameObject);
+                player.GetComponent<Character>().direction *= -1;
+            }
         }
             
     }

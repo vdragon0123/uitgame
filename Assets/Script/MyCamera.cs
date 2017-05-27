@@ -16,11 +16,13 @@ public class MyCamera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
-        float deltaX = player.transform.position.x - beforeTransformPlayer.x;
-        float deltaZ = player.transform.position.z - beforeTransformPlayer.z;
-        transform.position = new Vector3(transform.position.x + deltaX / 2, transform.position.y + deltaZ * (transform.forward + transform.up).y / 11, transform.position.z + deltaZ * (transform.forward + transform.up).z / 11);
-       
-        beforeTransformPlayer = player.transform.position;
+        if (player != null)
+        {
+            float deltaX = player.transform.position.x - beforeTransformPlayer.x;
+            float deltaZ = player.transform.position.z - beforeTransformPlayer.z;
+            transform.position = new Vector3(transform.position.x + deltaX / 2, transform.position.y + deltaZ * (transform.forward + transform.up).y / 11, transform.position.z + deltaZ * (transform.forward + transform.up).z / 11);
 
+            beforeTransformPlayer = player.transform.position;
+        }
     }
 }

@@ -16,10 +16,14 @@ public class Around : MonoBehaviour {
     float minZ;
 
     public float speed;
-    float direction;
+    public float direction;
 
-    public bool isMove;
+    public bool isMoveX;
+    public bool isMoveY;
     bool onceTime;
+
+    public float tocDoGiam = 1;
+    public float tocDoTang = 1;
 	// Use this for initialization
 	void Start () {
 
@@ -29,7 +33,6 @@ public class Around : MonoBehaviour {
         minX = GameObject.FindGameObjectWithTag("Ground").GetComponent<BoxCollider>().bounds.min.x;
         minZ = GameObject.FindGameObjectWithTag("Ground").GetComponent<BoxCollider>().bounds.min.z;
         Debug.Log(maxX);
-        isMove = true;
         direction = 1;
     }
 	
@@ -39,49 +42,146 @@ public class Around : MonoBehaviour {
         {
             timeHealth += Time.deltaTime;
             if (timeHealth > 3)
-                health.fillAmount -= 0.005f;
+                health.fillAmount -= 0.005f / tocDoGiam;
             //Debug.Log(gameObject.GetComponent<SpriteRenderer>().bounds.max);
-            if (isMove)
+            if (isMoveX)
             {
-                if (!onceTime)
-                    transform.position = new Vector3(transform.position.x + Time.deltaTime * speed * direction, transform.position.y, transform.position.z);
-                if (Mathf.Abs(transform.position.x - maxX) < 0.5f)
+                if (direction == 1)
                 {
-                    transform.position = new Vector3(minX, transform.position.y, transform.position.z);
+                    if (!onceTime)
+                        transform.position = new Vector3(transform.position.x + Time.deltaTime * speed * direction, transform.position.y, transform.position.z);
+                    if (Mathf.Abs(transform.position.x - maxX) < 0.5f)
+                    {
+                        transform.position = new Vector3(minX, transform.position.y, transform.position.z);
+                    }
+                }
+                else
+                {
+                    if (!onceTime)
+                        transform.position = new Vector3(transform.position.x + Time.deltaTime * speed * direction, transform.position.y, transform.position.z);
+                    if (Mathf.Abs(transform.position.x - minX) < 0.5f)
+                    {
+                        transform.position = new Vector3(maxX, transform.position.y, transform.position.z);
+                    }
                 }
                     
+            }
+            if (isMoveY)
+            {
+                if (direction == 1)
+                {
+                    if (!onceTime)
+                        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + Time.deltaTime * speed * direction);
+                    if (Mathf.Abs(transform.position.z - maxZ) < 0.5f)
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y, minZ);
+                    }
+                }
+                else
+                {
+                    if (!onceTime)
+                        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + Time.deltaTime * speed * direction);
+                    if (Mathf.Abs(transform.position.z - minZ) < 0.5f)
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y, maxZ);
+                    }
+                }
             }
         }
         if (gameObject.tag == "Around2")
         {
             timeHealth += Time.deltaTime;
             if (timeHealth > 3)
-                health.fillAmount -= 0.005f;
-            if (isMove)
+                health.fillAmount -= 0.005f / tocDoGiam;
+            if (isMoveX)
             {
-                if (!onceTime)
-                    transform.position = new Vector3(transform.position.x + Time.deltaTime * speed, transform.position.y, transform.position.z);
-                if (Mathf.Abs(transform.position.x - maxX) < 0.5f)
+                if (direction == 1)
                 {
-                    transform.position = new Vector3(minX, transform.position.y, transform.position.z);
+                    if (!onceTime)
+                        transform.position = new Vector3(transform.position.x + Time.deltaTime * speed * direction, transform.position.y, transform.position.z);
+                    if (Mathf.Abs(transform.position.x - maxX) < 0.5f)
+                    {
+                        transform.position = new Vector3(minX, transform.position.y, transform.position.z);
+                    }
                 }
-
+                else
+                {
+                    if (!onceTime)
+                        transform.position = new Vector3(transform.position.x + Time.deltaTime * speed * direction, transform.position.y, transform.position.z);
+                    if (Mathf.Abs(transform.position.x - minX) < 0.5f)
+                    {
+                        transform.position = new Vector3(maxX, transform.position.y, transform.position.z);
+                    }
+                }
+            }
+            if (isMoveY)
+            {
+                if (direction == 1)
+                {
+                    if (!onceTime)
+                        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + Time.deltaTime * speed * direction);
+                    if (Mathf.Abs(transform.position.z - maxZ) < 0.5f)
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y, minZ);
+                    }
+                }
+                else
+                {
+                    if (!onceTime)
+                        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + Time.deltaTime * speed * direction);
+                    if (Mathf.Abs(transform.position.z - minZ) < 0.5f)
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y, maxZ);
+                    }
+                }
             }
         }
         if (gameObject.tag == "Around3")
         {
             timeHealth += Time.deltaTime;
             if (timeHealth > 3)
-                health.fillAmount -= 0.005f;
-            if (isMove)
+                health.fillAmount -= 0.005f / tocDoGiam;
+            if (isMoveX)
             {
-                if (!onceTime)
-                    transform.position = new Vector3(transform.position.x + Time.deltaTime * speed, transform.position.y, transform.position.z);
-                if (Mathf.Abs(transform.position.x - maxX) < 0.5f)
+                if (direction == 1)
                 {
-                    transform.position = new Vector3(minX, transform.position.y, transform.position.z);
+                    if (!onceTime)
+                        transform.position = new Vector3(transform.position.x + Time.deltaTime * speed * direction, transform.position.y, transform.position.z);
+                    if (Mathf.Abs(transform.position.x - maxX) < 0.5f)
+                    {
+                        transform.position = new Vector3(minX, transform.position.y, transform.position.z);
+                    }
                 }
-
+                else
+                {
+                    if (!onceTime)
+                        transform.position = new Vector3(transform.position.x + Time.deltaTime * speed * direction, transform.position.y, transform.position.z);
+                    if (Mathf.Abs(transform.position.x - minX) < 0.5f)
+                    {
+                        transform.position = new Vector3(maxX, transform.position.y, transform.position.z);
+                    }
+                }
+            }
+            if (isMoveY)
+            {
+                if (direction == 1)
+                {
+                    if (!onceTime)
+                        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + Time.deltaTime * speed * direction);
+                    if (Mathf.Abs(transform.position.z - maxZ) < 0.5f)
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y, minZ);
+                    }
+                }
+                else
+                {
+                    if (!onceTime)
+                        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + Time.deltaTime * speed * direction);
+                    if (Mathf.Abs(transform.position.z - minZ) < 0.5f)
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y, maxZ);
+                    }
+                }
             }
         }
 
@@ -89,19 +189,91 @@ public class Around : MonoBehaviour {
         {
             timeHealth += Time.deltaTime;
             if (timeHealth > 3)
-                health.fillAmount -= 0.005f;
-            if (isMove)
+                health.fillAmount -= 0.005f / tocDoGiam;
+            if (isMoveX)
             {
-                if (!onceTime)
-                    transform.position = new Vector3(transform.position.x + Time.deltaTime * speed, transform.position.y, transform.position.z);
-                if (Mathf.Abs(transform.position.x - maxX) < 0.5f)
+                if (direction == 1)
                 {
-                    transform.position = new Vector3(minX, transform.position.y, transform.position.z);
+                    if (!onceTime)
+                        transform.position = new Vector3(transform.position.x + Time.deltaTime * speed * direction, transform.position.y, transform.position.z);
+                    if (Mathf.Abs(transform.position.x - maxX) < 0.5f)
+                    {
+                        transform.position = new Vector3(minX, transform.position.y, transform.position.z);
+                    }
                 }
-
+                else
+                {
+                    if (!onceTime)
+                        transform.position = new Vector3(transform.position.x + Time.deltaTime * speed * direction, transform.position.y, transform.position.z);
+                    if (Mathf.Abs(transform.position.x - minX) < 0.5f)
+                    {
+                        transform.position = new Vector3(maxX, transform.position.y, transform.position.z);
+                    }
+                }
+            }
+            if (isMoveY)
+            {
+                if (direction == 1)
+                {
+                    if (!onceTime)
+                        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + Time.deltaTime * speed * direction);
+                    if (Mathf.Abs(transform.position.z - maxZ) < 0.5f)
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y, minZ);
+                    }
+                }
+                else
+                {
+                    if (!onceTime)
+                        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + Time.deltaTime * speed * direction);
+                    if (Mathf.Abs(transform.position.z - minZ) < 0.5f)
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y, maxZ);
+                    }
+                }
             }
         }
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (gameObject.tag == "Around1")
+        {
+            if (other.gameObject.tag == "Around2")
+                other.gameObject.GetComponent<Around>().direction *= -1;
+            if (other.gameObject.tag == "Around3")
+                other.gameObject.GetComponent<Around>().direction *= -1;
+            if (other.gameObject.tag == "Around4")
+                other.gameObject.GetComponent<Around>().direction *= -1;
+        }
+        if (gameObject.tag == "Around2")
+        {
+            if (other.gameObject.tag == "Around1")
+                other.gameObject.GetComponent<Around>().direction *= -1;
+            if (other.gameObject.tag == "Around3")
+                other.gameObject.GetComponent<Around>().direction *= -1;
+            if (other.gameObject.tag == "Around4")
+                other.gameObject.GetComponent<Around>().direction *= -1;
+        }
+        if (gameObject.tag == "Around3")
+        {
+            if (other.gameObject.tag == "Around2")
+                other.gameObject.GetComponent<Around>().direction *= -1;
+            if (other.gameObject.tag == "Around1")
+                other.gameObject.GetComponent<Around>().direction *= -1;
+            if (other.gameObject.tag == "Around4")
+                other.gameObject.GetComponent<Around>().direction *= -1;
+        }
+        if (gameObject.tag == "Around4")
+        {
+            if (other.gameObject.tag == "Around2")
+                other.gameObject.GetComponent<Around>().direction *= -1;
+            if (other.gameObject.tag == "Around3")
+                other.gameObject.GetComponent<Around>().direction *= -1;
+            if (other.gameObject.tag == "Around1")
+                other.gameObject.GetComponent<Around>().direction *= -1;
+        }
     }
 
     void OnTriggerStay(Collider other)
@@ -112,7 +284,7 @@ public class Around : MonoBehaviour {
             {
                 GameObject.FindObjectOfType<Character>().speed = 2;
                 timeHealth = 0;
-                health.fillAmount += 0.005f;
+                health.fillAmount += 0.0005f * tocDoTang;
 
             }
         }
@@ -122,13 +294,8 @@ public class Around : MonoBehaviour {
             {
                 GameObject.FindObjectOfType<Character>().speed = 2;
                 timeHealth = 0;
-                health.fillAmount += 0.005f;
+                health.fillAmount += 0.0005f * tocDoTang;
 
-            }
-            else
-            {
-                if (other.gameObject.tag != "Enemy" && other.gameObject.tag != "Ground")
-                    direction *= -1;
             }
         }
         if (gameObject.tag == "Around3")
@@ -137,7 +304,7 @@ public class Around : MonoBehaviour {
             {
                 GameObject.FindObjectOfType<Character>().speed = 2;
                 timeHealth = 0;
-                health.fillAmount += 0.005f;
+                health.fillAmount += 0.0005f * tocDoTang;
 
             }
         }
@@ -148,7 +315,7 @@ public class Around : MonoBehaviour {
             {
                 GameObject.FindObjectOfType<Character>().speed = 2;
                 timeHealth = 0;
-                health.fillAmount += 0.005f;
+                health.fillAmount += 0.0005f * tocDoTang;
 
             }
         }
@@ -160,28 +327,28 @@ public class Around : MonoBehaviour {
         {
             if (other.gameObject.tag == "Player")
             {
-                GameObject.FindObjectOfType<Character>().speed = 6;
+                GameObject.FindObjectOfType<Character>().speed = GameObject.FindObjectOfType<Character>().startSpeed;
             }
         }
         if (gameObject.tag == "Around2")
         {
             if (other.gameObject.tag == "Player")
             {
-                GameObject.FindObjectOfType<Character>().speed = 6;
+                GameObject.FindObjectOfType<Character>().speed = GameObject.FindObjectOfType<Character>().startSpeed;
             }
         }
         if (gameObject.tag == "Around3")
         {
             if (other.gameObject.tag == "Player")
             {
-                GameObject.FindObjectOfType<Character>().speed = 6;
+                GameObject.FindObjectOfType<Character>().speed = GameObject.FindObjectOfType<Character>().startSpeed;
             }
         }
         if (gameObject.tag == "Around4")
         {
             if (other.gameObject.tag == "Player")
             {
-                GameObject.FindObjectOfType<Character>().speed = 6;
+                GameObject.FindObjectOfType<Character>().speed = GameObject.FindObjectOfType<Character>().startSpeed;
             }
         }
     }

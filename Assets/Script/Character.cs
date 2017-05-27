@@ -13,22 +13,28 @@ public class Character : MonoBehaviour {
     public bool isRotationRightPointerDown;
     public bool isAddForcePointerDown;
 
-    public float speed = 6f;
+    public float speed = 10f;
+    public float startSpeed;
 
     float timeFillAmount;
     public Image loadingImage;
 
     float force;
     bool onceTime;
+
+    public float direction;
     // Use this for initialization
     void Start () {
         rig = GetComponent<Rigidbody>();
+        direction = 1;
+        startSpeed = speed;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        
         vectorDirection = objectDirection.position - transform.position;
-        rig.MovePosition(transform.position + transform.up * Time.deltaTime * speed);
+        rig.MovePosition(transform.position + transform.up * Time.deltaTime * speed * direction);
         if (isRotationLeftPointerDown)
             transform.Rotate(Vector3.forward * Time.deltaTime * 80);
         if (isRotationRightPointerDown)
@@ -36,8 +42,8 @@ public class Character : MonoBehaviour {
 
         timeFillAmount += Time.deltaTime;
         loadingImage.fillAmount = Mathf.Lerp(0, 1, timeFillAmount / 3);
-        
-
+            
+        Debug.Log(Vector2.Angle(Vector2.up, new Vector2(transform.up.x, transform.up.z)));
         if (isAddForcePointerDown)
         {
             /*onceTime = false;
@@ -99,7 +105,7 @@ public class Character : MonoBehaviour {
             isAddForcePointerDown = false;
             timeFillAmount = 0;
             loadingImage.fillAmount = 0;
-            rig.AddForce(transform.up * 5500);
+            rig.AddForce(transform.up * 5500 * direction);
             Time.timeScale = 1f;
         }        
     }
